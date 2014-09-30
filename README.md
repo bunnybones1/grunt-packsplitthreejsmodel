@@ -1,6 +1,6 @@
-# grunt-packsplitthreejsmodel
+# grunt-splitthreejsmodel
 
-> A task to compress ffiles and folder for streaming.
+> A grunt plugin to compress threejs json model files. The resulting TAR GZ files are optimized to decompress in the order you want, in case you're using a streaming decompressor. For use in conjunction with [grunt-convertautodesktothreejs](https://github.com/bunnybones1/grunt-convertautodesktothreejs) and [grunt-splitthreejsmodel](https://github.com/bunnybones1/grunt-splitthreejsmodel).
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -8,7 +8,7 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-packsplitthreejsmodel --save-dev
+npm install bunnybones1/grunt-packsplitthreejsmodel --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
@@ -22,68 +22,25 @@ grunt.loadNpmTasks('grunt-packsplitthreejsmodel');
 ### Overview
 In your project's Gruntfile, add a section named `packsplitthreejsmodel` to the data object passed into `grunt.initConfig()`.
 
+### Usage Examples
+
 ```js
 grunt.initConfig({
   packsplitthreejsmodel: {
     options: {
       // Task-specific options go here.
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
-```
-
-### Options
-
-#### options.separator
-Type: `String`
-Default value: `',  '`
-
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
-
-### Usage Examples
-
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  packsplitthreejsmodel: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  packsplitthreejsmodel: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
+    exampleScene: {
+      options: {
+        // Target-specific options go here.
+        models: [
+          'test/model1/parse.autodesk.dae'
+        ]
+      }
+    }
   },
 });
 ```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-_(Nothing yet)_
