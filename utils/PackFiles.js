@@ -7,6 +7,7 @@ var path = require('path'),
   _ = require('lodash'),
   derive = require('filepathderivatives');
 
+var _grunt;
 var zipped = 0;
 var zipping = 0;
 function createTarGZ(path, files, outputPath, callback) {
@@ -19,9 +20,9 @@ function createTarGZ(path, files, outputPath, callback) {
       var relFilePath = derive.difference(this.root.dirname, this.path);
       var willInclude = isDirectory || (files.indexOf(relFilePath) != -1);
       if(willInclude && !isDirectory) {
-        console.log("adding " + this.basename);
+        _grunt.verbose.writeln("adding " + this.basename);
       } else {
-        console.log("skipping " + this.basename);
+        _grunt.verbose.writeln("skipping " + this.basename);
       }
       return willInclude;
     }
@@ -36,7 +37,8 @@ function createTarGZ(path, files, outputPath, callback) {
 }
 
 function PackFiles (pathSrc, files, pathDst, onComplete, onError, grunt) {
-  grunt.verbose.writeln('compressing', files.length , 'file(s) in', path.normalize(pathSrc));
+  _grunt = grunt;
+  _grunt.verbose.writeln('compressing', files.length , 'file(s) in', path.normalize(pathSrc));
   var rootPath = path.resolve(pathSrc);
   var filePrependPath = path.resolve(pathSrc + '/..');
   // console.log(rootPath);
@@ -58,25 +60,24 @@ function PackFiles (pathSrc, files, pathDst, onComplete, onError, grunt) {
     files[i] = path.normalize(temp + filePrependPath + '/' + filePath);
     var filePathRelToNode = path.normalize('.' + rootPath + '/' + filePath);
     if(grunt.file.exists(filePathRelToNode)) {
-      grunt.verbose.ok(filePathRelToNode, 'exists!');
-      console.log(files[i]);
+      _grunt.verbose.ok(filePathRelToNode, 'exists!');
     } else {
-      grunt.log.error(filePathRelToNode, 'does not exist! omitting.');
+      _grunt.log.error(filePathRelToNode, 'does not exist! omitting.');
       files.splice(i, 1);
     }
   };
   if(files.length > 0) {
     createTarGZ(gzipPath, files, pathDst, function() {
-      grunt.log.oklns("gzipped", pathDst);
+      _grunt.log.oklns("gzipped", pathDst);
       onComplete();
     });
   }
   // onComplete();
     // fs.exists(pathDst, function(exists) {
     //   if(exists) {
-    //     grunt.verbose.error('File exists. Overwrite!');
+    //     _grunt.verbose.error('File exists. Overwrite!');
     //   } else {
-    //     grunt.verbose.ok('File does not exist. Create!');
+    //     _grunt.verbose.ok('File does not exist. Create!');
     //   }
     // });
 }
