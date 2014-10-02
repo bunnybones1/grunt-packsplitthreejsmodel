@@ -1,16 +1,16 @@
 var fs = require('fs');
 var _grunt;
-
-function ListFilesIn(path, grunt, onComplete) {
+var path = require('path');
+function ListFilesIn(srcPath, grunt, onComplete) {
 	_grunt = grunt;
-	_grunt.verbose.writeln('getting list of files in', path);
+	_grunt.verbose.writeln('getting list of files in', srcPath);
 	this.exploring = 0;
 	this.files = [];
-	this.path = path;
+	this.srcPath = srcPath;
 	this.onComplete = onComplete;
 	this.finishOneExplorationAncCheckIfDone = this.finishOneExplorationAncCheckIfDone.bind(this);
 	this.readDirAndAppendFiles = this.readDirAndAppendFiles.bind(this);
-	this.readDirAndAppendFiles(this.path);
+	this.readDirAndAppendFiles(this.srcPath);
 }
 
 ListFilesIn.prototype = {
@@ -21,16 +21,19 @@ ListFilesIn.prototype = {
 			this.onComplete(this.files);
 		}
 	},
-	readDirAndAppendFiles: function(path) {
+	readDirAndAppendFiles: function(srcPath) {
 		this.exploring++;
 		var _this = this;
-		fs.readdir(path, function(err, files) {
-			if (err) _grunt.log.error(err);
+		fs.readdir(srcPath, function(err, files) {
+			if (err) _grunt.fail.error(err);
 			files.forEach(function(file) {
-				file = path + '/' + file;
+				file = path.normalize(srcPath + '/' + file);
 				// _grunt.verbose.writeln(file);
 				_this.exploring++;
 				fs.stat(file, function(err, stat) {
+					if(err) {
+						_grunt.fail.error(err);
+					} 
 					if (stat && stat.isDirectory()) {
 						_this.readDirAndAppendFiles(file);
 					} else {

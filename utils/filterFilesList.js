@@ -1,5 +1,5 @@
 var fs = require('fs'),
-  derive = require('./filePathDerivatives');
+  derive = require('filepathderivatives');
 
 var INCLUDE_ONLY = 1;
 

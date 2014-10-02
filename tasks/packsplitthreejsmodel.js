@@ -10,7 +10,8 @@
 
 var PackFiles = require('../utils/PackFiles'),
   PackJsonTreeFiles = require('../utils/PackJsonTreeFiles'),
-  derive = require('../utils/filePathDerivatives'),
+  derive = require('filepathderivatives'),
+  path = require('path'),
   filterFilesList = require('../utils/filterFilesList');
 
 var writingFileGroups = 0;
@@ -43,9 +44,9 @@ module.exports = function(grunt) {
 
     for (i = options.models.length - 1; i >= 0; i--) {
       writingFileGroups++;
-      model = options.models[i];
-      pathSrc = derive.path(model);
-      files = [derive.replaceExtension(derive.difference(pathSrc, model), 'json')];
+      model = path.normalize(options.models[i]);
+      pathSrc = path.dirname(model);
+      files = [derive.replaceExtension(path.basename(model), 'json')];
       outputPath = derive.replaceExtension(model, 'full.tar.gz');
       new PackFiles(
         pathSrc,
@@ -55,23 +56,22 @@ module.exports = function(grunt) {
         errorHandler,
         grunt);
     }
-
     grunt.log.ok("COMPRESSING JSON TREE");
 
     for (i = options.models.length - 1; i >= 0; i--) {
       writingFileGroups++;
       model = options.models[i];
-      pathSrc = derive.path(model);
-      files = [derive.replaceExtension(derive.difference(pathSrc, model), 'json')];
+      pathSrc = path.dirname(model);
       outputPath = derive.replaceExtension(model, 'tree.tar.gz');
     
       new PackJsonTreeFiles(
-        pathSrc + derive.baseName(model),
+        path.normalize(pathSrc + '/' + path.basename(model, path.extname(model))),
         outputPath,
         wroteFileGroupCompleteCallback,
         errorHandler,
         grunt);
     }
+    return;
     grunt.log.ok("COMPRESSING INDIVIDUAL GEOMETRIES");
     grunt.log.ok("COMPRESSING BRANCH GEOMETRIES");
     grunt.log.ok("COMPRESSING SAMPLE STARTERKIT");

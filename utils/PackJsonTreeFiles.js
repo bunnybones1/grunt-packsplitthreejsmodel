@@ -1,6 +1,6 @@
 var PackFiles = require('./PackFiles'),
   DiscoverGeometryFiles = require('./DiscoverGeometryFiles'),
-  derive = require('./filePathDerivatives'),
+  derive = require('filepathderivatives'),
   ListFilesIn = require('./ListFilesIn'),
   filterFilesList = require('./filterFilesList');
 

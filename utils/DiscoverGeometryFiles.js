@@ -30,7 +30,7 @@ DiscoverGeometryFiles.prototype = {
 			};
 
 			for (var i = this.reducedGeometryFiles.length - 1; i >= 0; i--) {
-          		this.reducedGeometryFiles[i] = '/../geometry/' + this.reducedGeometryFiles[i] + '.json';
+          		this.reducedGeometryFiles[i] = '../geometry/' + this.reducedGeometryFiles[i] + '.json';
 			};
 
 			this.onComplete(this.reducedGeometryFiles);
