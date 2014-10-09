@@ -1,6 +1,10 @@
 # grunt-splitthreejsmodel
 
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+
 > A grunt plugin to compress threejs json model files. The resulting TAR GZ files are optimized to decompress in the order you want, in case you're using a streaming decompressor. For use in conjunction with [grunt-convertautodesktothreejs](https://github.com/bunnybones1/grunt-convertautodesktothreejs) and [grunt-splitthreejsmodel](https://github.com/bunnybones1/grunt-splitthreejsmodel).
+
+[![NPM](https://nodei.co/npm/grunt-splitthreejsmodel.png)](https://nodei.co/npm/grunt-splitthreejsmodel/)
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
