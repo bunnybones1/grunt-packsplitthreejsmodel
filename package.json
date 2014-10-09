@@ -1,7 +1,7 @@
 {
   "name": "grunt-packsplitthreejsmodel",
   "description": "A task to compress ffiles and folder for streaming.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/Tomasz/grunt-packsplitthreejsmodel",
   "author": {
     "name": "Tomasz Dysinski",
